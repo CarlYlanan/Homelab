@@ -1,0 +1,20 @@
+# Update system
+sudo apt update && sudo apt upgrade -y
+
+# Install essential tools
+sudo apt install -y curl wget git htop net-tools gparted gnome-disk-utility apt-transport-https ca-certificates gnupg2 software-properties-common
+
+curl -fsSL https://get.docker.com -o get-docker.sh
+sudo sh get-docker.sh
+sudo usermod -aG docker $USER
+sudo apt install -y docker-compose
+
+# Log out and back in for group changes to take effect
+# After logging back in:
+
+# Create directory structure
+mkdir -p ~/homelab/{configs,data}
+cd ~/homelab
+
+# Create Docker network
+docker network create homelab
