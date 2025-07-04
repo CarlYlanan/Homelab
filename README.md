@@ -105,12 +105,97 @@ docker-compose up -d
 
 ---
 
-## Notes
+## Samba Setup
 
-- All services are self-hosted and manually maintained.  
-- The setup prioritizes local use with minimal external ports exposed.  
-- File sharing is done using Samba for compatibility with Windows and macOS devices.  
-- Drives are monitored regularly with Scrutiny for early failure detection.
+This section outlines how to mount external drives and expose them via Samba for local file sharing.
+
+### 1. Create mount points
+
+```bash
+sudo mkdir /mnt/2TB /mnt/4TB
+```
+
+### 2. Edit `/etc/fstab` for persistent mounting
+
+```bash
+sudo nano /etc/fstab
+```
+
+Example entry:
+```
+#UUID=2695-88E0 /mnt/2TB exfat defaults,uid=65534,gid=65534,fmask=0000,dmask=0000 0 0
+UUID=344A-E2BC /mnt/4TB exfat defaults,uid=65534,gid=65534,fmask=0000,dmask=0000 0 0
+```
+
+Use `lsblk` or `blkid` to find the correct UUIDs for your drives.
+
+### 3. Optional: Bind-mount specific folder (e.g. for ROMs)
+
+```bash
+sudo mount --bind /mnt/4TB/Games/Emulations /home/ylanan/ROMS
+```
+
+### 4. Set permissions
+
+```bash
+sudo chown -R nobody:nogroup /mnt/4TB
+sudo chmod -R 777 /mnt/4TB
+
+sudo chown -R nobody:nogroup /mnt/2TB
+sudo chmod -R 777 /mnt/2TB
+```
+
+### 5. Install Samba
+
+```bash
+sudo apt update
+sudo apt install exfat-fuse samba -y
+```
+
+### 6. Configure shares
+
+```bash
+sudo nano /etc/samba/smb.conf
+```
+
+Add at the bottom:
+
+```
+[4TB]
+   path = /mnt/4TB
+   browseable = yes
+   writable = yes
+   guest ok = yes
+   guest only = yes
+   create mask = 0777
+   directory mask = 0777
+   force user = nobody
+   force group = nogroup
+
+[2TB]
+   path = /mnt/2TB
+   browseable = yes
+   writable = yes
+   guest ok = yes
+   guest only = yes
+   create mask = 0777
+   directory mask = 0777
+   force user = nobody
+   force group = nogroup
+```
+
+### 7. Final steps
+
+```bash
+sudo systemctl restart smbd
+sudo ufw allow Samba
+```
+
+Then reboot or manually verify:
+
+```bash
+ls -ld /mnt/2TB /mnt/4TB
+```
 
 ---
 
