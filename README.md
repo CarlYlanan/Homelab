@@ -22,7 +22,7 @@ Services are split across categories such as media streaming, downloads, monitor
 **Hardware:** ASUS TUF A15  
 **CPU:** Ryzen 7 4800H  
 **GPU:** GTX 1660 Ti Mobile  
-**Storage:** External USB drives (2TB+ total)  
+**Storage:** External USB drives (4TB+ total)  
 **Networking:** Custom Docker bridge network + Samba file sharing  
 **Access Control:** Only Plex is exposed to the internet through strict firewall rules
 
