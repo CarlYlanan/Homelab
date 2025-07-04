@@ -5,4 +5,6 @@
 1. Update Ubuntu System - sudo apt update && sudo apt upgrade
 2. Install Samba/Iscsi
 3. Install Docker and create user
-4. Experiment
+4. Download Portainer/Dockage (Container Management)
+5. Experiment
+6. 
