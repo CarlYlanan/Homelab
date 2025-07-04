@@ -1,0 +1,38 @@
+Netdata
+
+docker run -d 
+  --name netdata 
+  --restart=always 
+  --network=homelab 
+  --security-opt apparmor=unconfined 
+  -p 19999:19999 
+  -v /proc:/host/proc:ro 
+  -v /sys:/host/sys:ro 
+  -v /var/run/docker.sock:/var/run/docker.sock:ro 
+  netdata/netdata
+
+Glances
+
+docker run -d 
+  --name glances 
+  --restart=always 
+  --network=homelab 
+  --security-opt apparmor=unconfined 
+  -p 61208:61208 
+  -e GLANCES_OPT="-w" 
+  -v /var/run/docker.sock:/var/run/docker.sock:ro 
+  nicolargo/glances
+
+
+
+Scrutiny (Drive Health Monitor)
+
+docker run -d 
+  --name scrutiny 
+  --restart=always 
+  --network=homelab 
+  -p 8086:8080 
+  -v ~/homelab/scrutiny/configs/scrutiny/config:/opt/scrutiny/config 
+  -v ~/homelab/scrutiny/data/scrutiny:/opt/scrutiny/influxdb 
+  --privileged 
+  ghcr.io/analogj/scrutiny:latest
