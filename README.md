@@ -12,7 +12,7 @@ This repository documents my personal homelab running on a repurposed ASUS TUF A
 | **Hardware**       | ASUS TUF A15 — Ryzen 7 4800H, GTX 1660 Ti Mobile |
 | **Storage**       | 2TB + 4TB external USB HDDs                     |
 | **Docker**        | Managed via Portainer (Docker CE)               |
-| **Networking**    | Samba for file sharing + Docker bridge network  |
+| **Networking**    | Samba + Xiaomi AX3000 + NetGear NightHawk Rax50v2  |
 | **Exposure**      | Only Plex is externally accessible via firewall |
 
 ---
