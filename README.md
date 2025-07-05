@@ -99,7 +99,7 @@ sudo ufw allow Samba
 
 ---
 
-## 🐳 Step 2: Install Docker & Portainer
+## Step 2: Install Docker & Portainer
 
 ### 1. Update and install essentials
 ```bash
@@ -132,7 +132,7 @@ Access Portainer at: [https://localhost:9443](https://localhost:9443)
 
 ---
 
-## 🚀 Step 3: Deploy Apps with Portainer
+## Step 3: Deploy Apps with Portainer
 
 1. Open [https://localhost:9443](https://localhost:9443)  
 2. Go to **Stacks → Add Stack**  
@@ -140,4 +140,24 @@ Access Portainer at: [https://localhost:9443](https://localhost:9443)
 4. Adjust volume paths to use `/mnt/2TB` or `/mnt/4TB`  
 5. Click **Deploy the Stack**
 
+## AdGuard Alterations
+
+sudo nano /etc/systemd/resolved.conf
+#DNSStubListener=yes - uncomment and change to no
+-> DNSStubListener=no
+
+sudo rm /etc/resolv.conf
+
+echo "nameserver 1.1.1.1" | sudo tee /etc/resolv.conf
+
+docker compose up -d
+
+### Excluded Filters
+Dandelion Sprout's Anti Push
+No Google
+HaGeZi's The World's Most Abused TLDs
+Anti-Piracy
+Shadowwhisperer List
+1Hosts (Pro) (FaceBook)
+HaGeZi's Ultimate Blocklist (FaceBook)
 ---
