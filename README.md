@@ -152,7 +152,7 @@ echo "nameserver 1.1.1.1" | sudo tee /etc/resolv.conf
 
 docker compose up -d
 
-## Excluded Filters
+### Excluded Filters
 1. Dandelion Sprout's Anti Push
 2. No Google
 3. HaGeZi's The World's Most Abused TLDs
