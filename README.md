@@ -13,7 +13,7 @@ This repository documents my personal homelab running on a repurposed ASUS TUF A
 | **Storage**       | 2TB + 4TB external USB HDDs                     |
 | **Docker**        | Managed via Portainer (Docker CE)               |
 | **Networking**    | Samba + Xiaomi AX3000 + NetGear NightHawk Rax50v2  |
-| **Exposure**      | Only Plex is externally accessible via firewall |
+| **Exposure**      | Plex - Port Forward |
 
 ---
 
