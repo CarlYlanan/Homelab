@@ -92,6 +92,18 @@ services:
       - 58846:58846 #optional
     restart: unless-stopped
 
+  tautulli:
+    image: tautulli/tautulli
+    container_name: tautulli
+    restart: unless-stopped
+    volumes:
+      - /home/carly/homelab/tautulli:/config
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=NZ
+    ports:
+      - 8181:8181
 
 networks:
   arrs:
