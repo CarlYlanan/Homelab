@@ -1,0 +1,66 @@
+# Remote Access
+## Tailscale
+
+curl -fsSL https://pkgs.tailscale.com/stable/ubuntu/noble.noarmor.gpg | sudo tee /usr/share/keyrings/tailscale-archive-keyring.gpg >/dev/null
+curl -fsSL https://pkgs.tailscale.com/stable/ubuntu/noble.tailscale-keyring.list | sudo tee /etc/apt/sources.list.d/tailscale.list
+
+sudo apt-get update
+sudo apt-get install tailscale
+
+sudo tailscale up
+
+tailscale ip -4
+
+# NAS Section
+## Drive Mounting
+
+sudo mkdir /mnt/4TB
+
+echo 'UUID=344A-E2BC /mnt/4TB exfat defaults,uid=65534,gid=65534,fmask=0000,dmask=0000 0 0' | sudo tee -a /etc/fstab
+
+sudo chown -R nobody:nogroup /mnt/4TB
+sudo chmod -R 777 /mnt/4TB
+
+sudo reboot
+
+sudo apt update
+sudo apt install exfat-fuse samba -y
+
+## Samba Insert
+
+sudo tee -a /etc/samba/smb.conf << 'EOF'
+
+[4TB]
+   path = /mnt/4TB
+   browseable = yes
+   writable = yes
+   guest ok = yes
+   guest only = yes
+   create mask = 0777
+   directory mask = 0777
+   force user = nobody
+   force group = nogroup
+EOF
+
+# Docker Install
+
+## Update system
+sudo apt update && sudo apt upgrade -y
+
+## Install essential tools
+sudo apt install -y curl wget git htop net-tools gparted gnome-disk-utility apt-transport-https ca-certificates gnupg2 software-properties-common
+
+curl -fsSL https://get.docker.com -o get-docker.sh
+sudo sh get-docker.sh
+sudo usermod -aG docker $USER
+sudo apt install -y docker-compose
+
+# Reboot/LogOut
+
+
+## Create directory structure
+mkdir -p ~/homelab/{configs,data}
+cd ~/homelab
+
+## Create Docker network
+sudo docker network create homelab
